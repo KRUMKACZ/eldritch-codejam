@@ -37,7 +37,7 @@ body {
 .complexity>div {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 40px;
     color: antiquewhite;
 }
 
@@ -51,7 +51,7 @@ label {
 }
 
 .mix-up {
-    margin-top: 30px;
+    margin-top: 60px;
 }
 
 .mix-up>div>div {

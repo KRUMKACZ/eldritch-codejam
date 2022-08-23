@@ -78,12 +78,15 @@ mixUp.addEventListener('click', (event) => {
     if (event.target.className == 'mix-button') {
         mixUp.innerHTML = `
         <div class="row justify-content-center">
-        <div class="col-4">
-         Колода Мифов
+        <div class="col-3">
+            Колода Мифов
         </div>
-        <div class="col-4">
-          Выбор карты
+        <div class="col-3">
+            Выбор карты
         </div>
+        <div class="col-3">
+            Полученая карта
+      </div>
       </div>`;
     }
 });
