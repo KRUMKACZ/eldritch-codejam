@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "bootstrap": "^5.2.0"
+  },
+  "name": "eldritch-codejam",
+  "description": "В рамках данного CodeJam необходимо будет создать небольшое приложение-хелпер для настольной игры \"Древний Ужас\"",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Viruss-git/eldritch-codejam.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Viruss-git/eldritch-codejam/issues"
+  },
+  "homepage": "https://github.com/Viruss-git/eldritch-codejam#readme",
+  "type": "module"
+}

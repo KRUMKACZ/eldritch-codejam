@@ -8,6 +8,6 @@ const ancients = {
   cthulhu,
   iogSothoth,
   shubNiggurath
-}
+};
 
-export default ancients
+export default ancients;
