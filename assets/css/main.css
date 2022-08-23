@@ -1,0 +1,83 @@
+body {
+    background-image: url(../img/background.jpg);
+    background-size: cover;
+    background-color: rgba(33, 33, 33, .85);
+    background-blend-mode: multiply;
+    color: antiquewhite;
+}
+
+.ancients {
+    margin-top: 25px;
+    height: 365px;
+}
+
+.col-3 {
+    border: none;
+    background: none;
+}
+
+.card>div {
+    display: flex;
+    justify-content: center;
+}
+
+.active-card {
+    width: 90%;
+    border: 2px solid red;
+}
+
+
+.card>div>img:hover {
+    position: relative;
+    cursor: pointer;
+    width: 90%;
+    transition: .2s;
+}
+
+.complexity>div {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    color: antiquewhite;
+}
+
+.radio-style {
+    margin-left: 12px;
+}
+
+input,
+label {
+    cursor: pointer;
+}
+
+.mix-up {
+    margin-top: 30px;
+}
+
+.mix-up>div>div {
+    display: flex;
+    justify-content: center;
+}
+
+
+.mix-up__button {
+    display: flex;
+    justify-content: center;
+}
+
+.mix-button {
+    background-color: #122727;
+    border: 1px solid #1F3230;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.mix-button:hover {
+    background-color: #030E10;
+    border: 1px solid wheat;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 3px;
+    transition: .3s;
+}
