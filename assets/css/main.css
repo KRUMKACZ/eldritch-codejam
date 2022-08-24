@@ -56,7 +56,8 @@ label {
 
 .mix-up>div>div {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -80,4 +81,59 @@ label {
     padding: 10px;
     border-radius: 3px;
     transition: .3s;
+}
+
+.stage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.dots-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.dot {
+    margin-right: 5px;
+}
+
+.green {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #08b260;
+    padding: 4px 10px;
+}
+
+.brown {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #5D3A25;
+    padding: 4px 10px;
+}
+
+.blue {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #3399CC;
+    padding: 4px 10px;
+}
+
+.click-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.get-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
 }

@@ -1,12 +1,16 @@
 import ancients from '../assets/Ancients/ancients.js';
 import mythDeck from './mythDeck.js';
 
-console.log(mythDeck);
+import greenCardsData from './greenCard.js';
+import brownCardsData from './brownCard.js';
+import blueCardsData from './blueCard.js';
+
+console.log(greenCardsData);
+
 
 let ancientsClass = document.querySelector('.ancients');
 let complexityClass = document.querySelector('.complexity');
 let mixUp = document.querySelector('.mix-up');
-
 
 ancients.forEach((element) => {
     let ancientImg = `<img src="assets/Ancients/${element}.png" width="85%" alt="${element}">`;
@@ -21,12 +25,12 @@ ancients.forEach((element) => {
     ancientCol.appendChild(ancient);
 });
 
-let cthulthu = document.querySelector('.Cthulthu');
-let shubNiggurath = document.querySelector('.ShubNiggurath');
-let logSothoth = document.querySelector('.IogSothoth');
-let azathoth = document.querySelector('.Azathoth');
+let cthulthu = document.querySelector('.cthulthu');
+let shubNiggurath = document.querySelector('.shubNiggurath');
+let logSothoth = document.querySelector('.iogSothoth');
+let azathoth = document.querySelector('.azathoth');
 
-const nameCardList = ['Cthulthu', 'ShubNiggurath', 'IogSothoth', 'Azathoth'];
+const nameCardList = ['cthulthu', 'shubNiggurath', 'iogSothoth', 'azathoth'];
 const propCardList = [cthulthu, shubNiggurath, logSothoth, azathoth];
 
 let selectCardValue = '';
@@ -54,16 +58,16 @@ let container = document.querySelector('.ancients');
 container.addEventListener('click', (event) => {
     let selectCard = event.target.alt;
     switch (selectCard) {
-        case 'Cthulthu':
+        case 'cthulthu':
             classToggle(selectCard);
             break;
-        case 'ShubNiggurath':
+        case 'shubNiggurath':
             classToggle(selectCard);
             break;
-        case 'IogSothoth':
+        case 'iogSothoth':
             classToggle(selectCard);
             break;
-        case 'Azathoth':
+        case 'azathoth':
             classToggle(selectCard);
             break;
         default:
@@ -83,61 +87,74 @@ complexityClass.addEventListener('click', (event) => {
     complexity = event.target.value;
     if (selectCardValue != '' && complexity != undefined) {
         mixUp.innerHTML = `<div class="col-md-6 offset-md-3 mix-up__button"><span class="mix-button">Замешать колоду</span></div>`;
-
-        console.log('Вы выбрали: ' + selectCardValue);
-        console.log('Сложность: ' + complexity);
+        /*
+                console.log('Вы выбрали: ' + selectCardValue);
+                console.log('Сложность: ' + complexity);
+        */
     }
 });
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function getMythDeck(selectCardValue) {
     let mythDeckClass = document.querySelector('.myth-deck');
 
-    let stageContainer = document.createElement('div');
-    stageContainer.classList.add('stage-container');
-
-    let stageText = document.createElement('span');
-    stageText.classList.add('stage-text');
-
-    let dotsContainer = document.createElement('div');
-    dotsContainer.classList.add('dots-container');
-
-
-    let green = document.createElement('div');
-    green.classList.add('dot', 'green');
-
-    let brown = document.createElement('div');
-    brown.classList.add('dot', 'brown');
-
-    let blue = document.createElement('div');
-    blue.classList.add('dot', 'blue');
-
-
     mythDeck[selectCardValue].forEach((el, index) => {
+
+        let stageContainer = document.createElement('div');
+        stageContainer.classList.add('stage-container');
+
+        let stageText = document.createElement('span');
+        stageText.classList.add('stage-text');
+
+        let dotsContainer = document.createElement('div');
+        dotsContainer.classList.add('dots-container');
+
+        let green = document.createElement('div');
+        green.classList.add('dot', 'green');
+
+        let brown = document.createElement('div');
+        brown.classList.add('dot', 'brown');
+
+        let blue = document.createElement('div');
+        blue.classList.add('dot', 'blue');
+
         mythDeckClass.appendChild(stageContainer);
         stageContainer.appendChild(stageText);
-        stageText.textContent = `${index} стадия`;
+        stageText.textContent = `${index + 1} стадия`;
         stageContainer.appendChild(dotsContainer);
 
         if (Array.isArray(el)) {
             el.forEach((el, index) => {
                 switch (index) {
                     case 0:
-                        console.log('green: ' + el);
+                        green.textContent = el;
+                        dotsContainer.appendChild(green);
                         break;
                     case 1:
-                        console.log('brown: ' + el);
+                        brown.textContent = el;
+                        dotsContainer.appendChild(brown);
                         break;
                     case 2:
-                        console.log('blue: ' + el);
+                        blue.textContent = el;
+                        dotsContainer.appendChild(blue);
                         break;
                 }
             });
         }
-
     });
-
 }
+
+function getCardAlgoritm() {
+
+    console.log('Вы выбрали: ' + selectCardValue);
+    console.log('Сложность: ' + complexity);
+
+    if (selectCardValue == 'cthulthu' && complexity == 'easy') {
+
+    }
+}
+
 
 mixUp.addEventListener('click', (event) => {
     if (event.target.className == 'mix-button') {
@@ -147,16 +164,21 @@ mixUp.addEventListener('click', (event) => {
             <div class="col-3">
                 Схема колоды мифов
                 <div class="myth-deck">
-                
                 </div>
             </div>
             <div class="col-3">
                 Выбор карты
+                <div class="click-card">
+                <img src="assets/img/mythicCardBackground.png" width="50%" alt="click-card">
+                </div>
             </div>
             <div class="col-3">
                 Полученная карта
+                <div class="get-card">
+                </div>
           </div>
           </div>`;
+            getCardAlgoritm();
         } else {
             mixUp.innerHTML = `
             <div class="row justify-content-center">
@@ -166,5 +188,16 @@ mixUp.addEventListener('click', (event) => {
             </div>`;
         }
         getMythDeck(selectCardValue);
+    }
+});
+
+function showAndRemoveCard() {
+    
+}
+
+
+window.addEventListener('click', (event) => {
+    if (event.target.alt == 'click-card') {
+        showAndRemoveCard();
     }
 });

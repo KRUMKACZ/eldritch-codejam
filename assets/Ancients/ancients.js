@@ -1,7 +1,7 @@
-let azathoth = 'Azathoth';
-let cthulhu = 'Cthulthu';
-let iogSothoth = 'IogSothoth';
-let shubNiggurath = 'ShubNiggurath';
+let azathoth = 'azathoth';
+let cthulhu = 'cthulthu';
+let iogSothoth = 'iogSothoth';
+let shubNiggurath = 'shubNiggurath';
 
 const ancients = [
   cthulhu,
