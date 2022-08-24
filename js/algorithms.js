@@ -89,6 +89,56 @@ complexityClass.addEventListener('click', (event) => {
     }
 });
 
+
+function getMythDeck(selectCardValue) {
+    let mythDeckClass = document.querySelector('.myth-deck');
+
+    let stageContainer = document.createElement('div');
+    stageContainer.classList.add('stage-container');
+
+    let stageText = document.createElement('span');
+    stageText.classList.add('stage-text');
+
+    let dotsContainer = document.createElement('div');
+    dotsContainer.classList.add('dots-container');
+
+
+    let green = document.createElement('div');
+    green.classList.add('dot', 'green');
+
+    let brown = document.createElement('div');
+    brown.classList.add('dot', 'brown');
+
+    let blue = document.createElement('div');
+    blue.classList.add('dot', 'blue');
+
+
+    mythDeck[selectCardValue].forEach((el, index) => {
+        mythDeckClass.appendChild(stageContainer);
+        stageContainer.appendChild(stageText);
+        stageText.textContent = `${index} стадия`;
+        stageContainer.appendChild(dotsContainer);
+
+        if (Array.isArray(el)) {
+            el.forEach((el, index) => {
+                switch (index) {
+                    case 0:
+                        console.log('green: ' + el);
+                        break;
+                    case 1:
+                        console.log('brown: ' + el);
+                        break;
+                    case 2:
+                        console.log('blue: ' + el);
+                        break;
+                }
+            });
+        }
+
+    });
+
+}
+
 mixUp.addEventListener('click', (event) => {
     if (event.target.className == 'mix-button') {
         if (selectCardValue != '' && complexity != '') {
@@ -96,6 +146,9 @@ mixUp.addEventListener('click', (event) => {
             <div class="row justify-content-center mix-result">
             <div class="col-3">
                 Схема колоды мифов
+                <div class="myth-deck">
+                
+                </div>
             </div>
             <div class="col-3">
                 Выбор карты
@@ -112,6 +165,6 @@ mixUp.addEventListener('click', (event) => {
                 </div>
             </div>`;
         }
-
+        getMythDeck(selectCardValue);
     }
 });
