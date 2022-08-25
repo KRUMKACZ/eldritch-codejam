@@ -5,9 +5,6 @@ import greenCardsData from './greenCard.js';
 import brownCardsData from './brownCard.js';
 import blueCardsData from './blueCard.js';
 
-console.log(greenCardsData);
-
-
 let ancientsClass = document.querySelector('.ancients');
 let complexityClass = document.querySelector('.complexity');
 let mixUp = document.querySelector('.mix-up');
@@ -78,7 +75,7 @@ container.addEventListener('click', (event) => {
 function addRadioButton() {
     complexityClass.innerHTML = `
 <div class="col-4"><input id="easy" class="easy" name="complexity" type="radio" value="easy"><label for="easy" class="radio-style"> Легкая</label></div>
-<div class="col-4"><input id="medium" class="medium" name="complexity" type="radio" value="medium"><label for="medium" class="radio-style"> Среднаяя</label></div>
+<div class="col-4"><input id="normal" class="normal" name="complexity" type="radio" value="normal"><label for="normal" class="radio-style"> Среднаяя</label></div>
 <div class="col-4"><input id="hard" class="hard" name="complexity" type="radio" value="hard"><label for="hard" class="radio-style"> Тяжелая</label></div>`;
 }
 
@@ -87,20 +84,20 @@ complexityClass.addEventListener('click', (event) => {
     complexity = event.target.value;
     if (selectCardValue != '' && complexity != undefined) {
         mixUp.innerHTML = `<div class="col-md-6 offset-md-3 mix-up__button"><span class="mix-button">Замешать колоду</span></div>`;
-        /*
-                console.log('Вы выбрали: ' + selectCardValue);
-                console.log('Сложность: ' + complexity);
-        */
     }
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getMythDeck(selectCardValue) {
+function getMythDeck(cardsArrayStage) {
     let mythDeckClass = document.querySelector('.myth-deck');
 
-    mythDeck[selectCardValue].forEach((el, index) => {
+    console.log(cardsArrayStage[0]['blue'].length);
 
+    cardsArrayStage.forEach((el, index) => {
+        console.log('--------------------------------/');
+        console.log(el.green);
+        console.log('--------------------------------/');
         let stageContainer = document.createElement('div');
         stageContainer.classList.add('stage-container');
 
@@ -124,36 +121,123 @@ function getMythDeck(selectCardValue) {
         stageText.textContent = `${index + 1} стадия`;
         stageContainer.appendChild(dotsContainer);
 
-        if (Array.isArray(el)) {
-            el.forEach((el, index) => {
-                switch (index) {
-                    case 0:
-                        green.textContent = el;
-                        dotsContainer.appendChild(green);
-                        break;
-                    case 1:
-                        brown.textContent = el;
-                        dotsContainer.appendChild(brown);
-                        break;
-                    case 2:
-                        blue.textContent = el;
-                        dotsContainer.appendChild(blue);
-                        break;
-                }
-            });
+        switch (el[index]) {
+            case 'green':
+                green.textContent = el.green.length;
+                dotsContainer.appendChild(green);
+                break;
+            case 'brown':
+                brown.textContent = el.brown.length;
+                dotsContainer.appendChild(brown);
+                break;
+            case 'blue':
+                blue.textContent = el.blue.length;
+                dotsContainer.appendChild(blue);
+                break;
         }
     });
 }
+
+// Генерируем случайное число
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //Максимум и минимум включаются
+}
+
+// Удаляем из общего массива карту, добавленную в сгенерированный массив для игры
+function deletedAddCard(subarray, idCard) {
+    let cardIndex = subarray.indexOf(idCard);
+    if (cardIndex !== -1) {
+        subarray.splice(cardIndex, 1);
+    }
+}
+
+// Генерируем коллецию карт для игры (трех этапов)
+function collectArrayCards(el) {
+
+    let stageArray = {
+        green: [],
+        brown: [],
+        blue: []
+    };
+
+    el.forEach((el, index) => { // Получаем элементы подмассива 
+        // Формируем кол-во иттераций для выборки карт [green, brown, blue]
+        let subarray,
+            idCard;
+
+        if (index == 0) { // Первая иттерация подмассива [0]
+            for (let i = 0; i < el; i++) {
+                if (greenCardsData[complexity] == 0) { // Добираем обычные карты
+                    complexity = 'normal';
+                }
+                let randomNum = getRandomIntInclusive(0, greenCardsData[complexity].length);
+                subarray = greenCardsData[complexity];
+                idCard = greenCardsData[complexity][randomNum];
+                stageArray['green'].push(idCard);
+
+                deletedAddCard(subarray, idCard);
+            }
+        }
+        if (index == 1) { // Вторая иттерация подмассива [2]
+            for (let i = 0; i < el; i++) {
+                if (brownCardsData[complexity] == 0) { // Добираем обычные карты
+                    complexity = 'normal';
+                }
+                let randomNum = getRandomIntInclusive(0, brownCardsData[complexity].length);
+                subarray = brownCardsData[complexity];
+                idCard = brownCardsData[complexity][randomNum];
+                stageArray['brown'].push(brownCardsData[complexity][randomNum]);
+
+                deletedAddCard(subarray, idCard);
+            }
+        }
+        if (index == 2) { // Третья иттерация подмассива [2]
+            for (let i = 0; i < el; i++) {
+                if (blueCardsData[complexity] == 0) { // Добираем обычные карты
+                    complexity = 'normal';
+                }
+                let randomNum = getRandomIntInclusive(0, blueCardsData[complexity].length);
+                subarray = blueCardsData[complexity];
+                idCard = blueCardsData[complexity][randomNum];
+                stageArray['blue'].push(blueCardsData[complexity][randomNum]);
+
+                deletedAddCard(subarray, idCard);
+            }
+        }
+    });
+    return stageArray;
+}
+
 
 function getCardAlgoritm() {
 
     console.log('Вы выбрали: ' + selectCardValue);
     console.log('Сложность: ' + complexity);
 
-    if (selectCardValue == 'cthulthu' && complexity == 'easy') {
+    let cardsArrayStage = [];
 
+    if (complexity == 'easy') {
+        mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
+            if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
+                let stageArray = collectArrayCards(el);
+                cardsArrayStage.push(stageArray);
+            }
+        });
     }
+
+    getMythDeck(cardsArrayStage); // selectCardValue
+
+    console.log('--------------------------------------');
+    console.log('Коллекция карт');
+    console.log(cardsArrayStage);
+    console.log('--------------------------------------');
+    console.log(greenCardsData);
+    console.log(brownCardsData);
+    console.log(blueCardsData);
 }
+
 
 
 mixUp.addEventListener('click', (event) => {
@@ -187,12 +271,14 @@ mixUp.addEventListener('click', (event) => {
                 </div>
             </div>`;
         }
-        getMythDeck(selectCardValue);
     }
 });
 
+
 function showAndRemoveCard() {
-    
+    console.log(mythDeck[selectCardValue][0]);
+    mythDeck[selectCardValue][0][1]--;
+    console.log(mythDeck[selectCardValue][0]);
 }
 
 
