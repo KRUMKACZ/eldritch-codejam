@@ -92,11 +92,11 @@ complexityClass.addEventListener('click', (event) => {
 function getMythDeck(cardsArrayStage) {
     let mythDeckClass = document.querySelector('.myth-deck');
 
-    console.log(cardsArrayStage[0]['blue'].length);
-
     cardsArrayStage.forEach((el, index) => {
         console.log('--------------------------------/');
         console.log(el.green);
+        console.log(el.brown);
+        console.log(el.blue);
         console.log('--------------------------------/');
         let stageContainer = document.createElement('div');
         stageContainer.classList.add('stage-container');
@@ -121,22 +121,62 @@ function getMythDeck(cardsArrayStage) {
         stageText.textContent = `${index + 1} стадия`;
         stageContainer.appendChild(dotsContainer);
 
-        switch (el[index]) {
-            case 'green':
-                green.textContent = el.green.length;
-                dotsContainer.appendChild(green);
-                break;
-            case 'brown':
-                brown.textContent = el.brown.length;
-                dotsContainer.appendChild(brown);
-                break;
-            case 'blue':
-                blue.textContent = el.blue.length;
-                dotsContainer.appendChild(blue);
-                break;
-        }
+        green.textContent = el.green.length;
+        dotsContainer.appendChild(green);
+
+        brown.textContent = el.brown.length;
+        dotsContainer.appendChild(brown);
+
+        blue.textContent = el.blue.length;
+        dotsContainer.appendChild(blue);
+
     });
 }
+
+
+function updateDataStage(cardsArrayStage) {
+    let mythDeckClass = document.querySelector('.myth-deck');
+
+    while (mythDeckClass.firstChild) {
+        mythDeckClass.removeChild(mythDeckClass.firstChild);
+    }
+
+    cardsArrayStage.forEach((el, index) => {
+        let stageContainer = document.createElement('div');
+        stageContainer.classList.add('stage-container');
+
+        let stageText = document.createElement('span');
+        stageText.classList.add('stage-text');
+
+        let dotsContainer = document.createElement('div');
+        dotsContainer.classList.add('dots-container');
+
+        let green = document.createElement('div');
+        green.classList.add('dot', 'green');
+
+        let brown = document.createElement('div');
+        brown.classList.add('dot', 'brown');
+
+        let blue = document.createElement('div');
+        blue.classList.add('dot', 'blue');
+
+        mythDeckClass.appendChild(stageContainer);
+        stageContainer.appendChild(stageText);
+        stageText.textContent = `${index + 1} стадия`;
+        stageContainer.appendChild(dotsContainer);
+
+        green.textContent = el.green.length;
+        dotsContainer.appendChild(green);
+
+        brown.textContent = el.brown.length;
+        dotsContainer.appendChild(brown);
+
+        blue.textContent = el.blue.length;
+        dotsContainer.appendChild(blue);
+
+    });
+}
+
 
 // Генерируем случайное число
 function getRandomIntInclusive(min, max) {
@@ -151,6 +191,10 @@ function deletedAddCard(subarray, idCard) {
     if (cardIndex !== -1) {
         subarray.splice(cardIndex, 1);
     }
+}
+
+function deletedCard(subarray) {
+    subarray.splice(0, 1);
 }
 
 // Генерируем коллецию карт для игры (трех этапов)
@@ -210,13 +254,12 @@ function collectArrayCards(el) {
     return stageArray;
 }
 
+let cardsArrayStage = [];
 
 function getCardAlgoritm() {
 
     console.log('Вы выбрали: ' + selectCardValue);
     console.log('Сложность: ' + complexity);
-
-    let cardsArrayStage = [];
 
     if (complexity == 'easy') {
         mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
@@ -227,15 +270,12 @@ function getCardAlgoritm() {
         });
     }
 
-    getMythDeck(cardsArrayStage); // selectCardValue
+    getMythDeck(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 
     console.log('--------------------------------------');
     console.log('Коллекция карт');
     console.log(cardsArrayStage);
     console.log('--------------------------------------');
-    console.log(greenCardsData);
-    console.log(brownCardsData);
-    console.log(blueCardsData);
 }
 
 
@@ -276,9 +316,8 @@ mixUp.addEventListener('click', (event) => {
 
 
 function showAndRemoveCard() {
-    console.log(mythDeck[selectCardValue][0]);
-    mythDeck[selectCardValue][0][1]--;
-    console.log(mythDeck[selectCardValue][0]);
+    deletedCard(cardsArrayStage[0].blue); ///////////////// !!! Исправить удаление элементов!!!
+    updateDataStage(cardsArrayStage);
 }
 
 
