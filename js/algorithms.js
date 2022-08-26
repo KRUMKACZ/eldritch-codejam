@@ -7,7 +7,8 @@ import blueCardsDataArr from './blueCard.js';
 
 let greenCardsData,
     brownCardsData,
-    blueCardsData;
+    blueCardsData,
+    showRandomCard;
 
 function importDataCard() {
     greenCardsData = JSON.parse(JSON.stringify(greenCardsDataArr));
@@ -116,13 +117,6 @@ function updateCountCard(cardsArrayStage) {
     }
 
     cardsArrayStage.forEach((el, index) => {
-        /*
-          console.log('--------------------------------/');
-          console.log(el.green);
-          console.log(el.brown);
-          console.log(el.blue);
-          console.log('--------------------------------/');
-        */
         let stageContainer = document.createElement('div');
         stageContainer.classList.add('stage-container');
 
@@ -154,7 +148,6 @@ function updateCountCard(cardsArrayStage) {
 
         blue.textContent = el.blue.length;
         dotsContainer.appendChild(blue);
-
     });
 }
 
@@ -175,8 +168,14 @@ function deletedAddCard(subarray, idCard) {
 }
 
 
-function deletedCard(subarray) {
-    subarray.splice(0, 1);
+function deletedCard(randomArrCard, folderCard) {
+    showRandomCard = randomArrCard[0];
+    console.log('Рандомная карта: ' + showRandomCard);
+    console.log('///////////////////////////////////////////////////////');
+    let showRandomCardContainer = document.querySelector('.get-card');
+
+    showRandomCardContainer.innerHTML = `<img src='./assets/MythicCards/${folderCard}/${showRandomCard}.png' width='50%' alt='select-card'>`;
+    randomArrCard.splice(0, 1);
 }
 
 
@@ -296,43 +295,58 @@ mixUp.addEventListener('click', (event) => {
     }
 });
 
-let itter1,
-    itter2,
-    itter3;
+let itter;
+let indexStage = 0;
+
+function updateItter() {
+    switch (indexStage) {
+        case 0:
+            itter = cardsArrayStage[indexStage].green.length + cardsArrayStage[indexStage].brown.length + cardsArrayStage[indexStage].blue.length;
+            break;
+        case 1:
+            itter = cardsArrayStage[indexStage].green.length + cardsArrayStage[indexStage].brown.length + cardsArrayStage[indexStage].blue.length;
+            break;
+        case 2:
+            itter = cardsArrayStage[indexStage].green.length + cardsArrayStage[indexStage].brown.length + cardsArrayStage[indexStage].blue.length;
+            break;
+    }
+}
 
 function showAndRemoveCard() {
+    updateItter();
+    let keys = Object.keys(cardsArrayStage[indexStage]);
+    let positionKeys = Math.floor(Math.random() * Object.keys(cardsArrayStage[indexStage]).length);
+    let randomArrCard = cardsArrayStage[indexStage][keys[positionKeys]];
+    let folderCard = keys[positionKeys];
+
+    console.log('-Ключ-----------------*---*');
+    console.log('Ключ: ' + keys[positionKeys]);
     console.log('----------------------------///');
-    console.log(cardsArrayStage[0]);
+
+    if (itter > 1) {
+        if (randomArrCard.length != 0) {
+            deletedCard(randomArrCard, folderCard);
+        } else {
+            showAndRemoveCard();
+        }
+    } else if (itter == 1) {
+        if (randomArrCard.length != 0) {
+            deletedCard(randomArrCard, folderCard);
+            indexStage++;
+        } else {
+            showAndRemoveCard();
+        }
+    }
+
+    updateItter();
+
+    console.log("Стадия " + indexStage);
+    console.log('----------------------------*---*');
+    console.log(cardsArrayStage[indexStage]);
     console.log('----------------------------///');
-
-    console.log('----------------------------***');
-    console.log(cardsArrayStage[0][Object.keys(cardsArrayStage[0])[Math.floor(Math.random() * Object.keys(cardsArrayStage[0]).length)]]);
-    console.log('----------------------------***');
-
-
-    deletedCard(cardsArrayStage[0].key[2]); ///////////////// !!! Исправить удаление элементов!!
 
     updateCountCard(cardsArrayStage);
 
-    cardsArrayStage.forEach((el, index) => {
-        switch (index) {
-            case 0:
-                itter1 = el.green.length + el.brown.length + el.blue.length;
-                break;
-            case 1:
-                itter2 = el.green.length + el.brown.length + el.blue.length;
-                break;
-            case 2:
-                itter3 = el.green.length + el.brown.length + el.blue.length;
-                break;
-        }
-    });
-
-    console.log('----------------------------///');
-    console.log(itter1);
-    console.log(itter2);
-    console.log(itter3);
-    console.log('----------------------------///');
 }
 
 
