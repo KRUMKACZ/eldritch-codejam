@@ -237,6 +237,7 @@ function collectArrayCardsEasy(el) {
     return stageArray;
 }
 
+
 function collectArrayCardsNormal(el) {
 
     let stageArray = {
@@ -320,7 +321,7 @@ function collectArrayCardsNormal(el) {
 
 // Функция формирующая матрицу выборки карт согласно выбранной сложности
 let cardsArrayStage = []; // Создаем пустой массив для карт
-
+let stageArray;
 function getCardAlgoritm() {
 
     console.log('Вы выбрали: ' + selectCardValue);
@@ -329,30 +330,34 @@ function getCardAlgoritm() {
 
     cardsArrayStage = []; // Пересоздаем пустой массив, в случае выбора новой карты
 
-    if (complexity == 'easy') { // Если выбран легкий уровень сложности
-        mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
-            if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
-                let stageArray = collectArrayCardsEasy(el);
-                cardsArrayStage.push(stageArray);
-            }
-        });
+    switch (complexity) {
+        case 'easy':
+            console.log('----------------Выбран легкий уровень----------');
+            mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
+                if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
+                    stageArray = collectArrayCardsEasy(el);
+                    cardsArrayStage.push(stageArray);
+                }
+            });
+            break;
+
+        case 'normal':
+            console.log('----------------Выбран нормальный уровень----------');
+            mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
+                if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
+                    stageArray = collectArrayCardsNormal(el);
+                    cardsArrayStage.push(stageArray);
+                }
+            });
+            break;
     }
 
-    if (complexity == 'normal') { // Если выбран легкий уровень сложности
-        mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
-            if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
-                let stageArray = collectArrayCardsNormal(el);
-                cardsArrayStage.push(stageArray);
-            }
-        });
-    }
-    console.log('------------Коллекция карт нормальной сложности--------------');
+    console.log('------------Коллекция карт--------------');
     console.log(cardsArrayStage);
     console.log('-------------------------------------');
 
     updateCountCard(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 }
-
 
 
 mixUp.addEventListener('click', (event) => {
