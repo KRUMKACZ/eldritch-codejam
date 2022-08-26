@@ -1,6 +1,6 @@
 body {
     background-image: url(../img/background.jpg);
-    background-size: cover;
+    /*background-size: cover;*/
     background-color: rgba(33, 33, 33, .85);
     background-blend-mode: multiply;
     color: antiquewhite;
@@ -8,7 +8,7 @@ body {
 
 .ancients {
     margin-top: 25px;
-    height: 365px;
+    /*height: 365px;*/
 }
 
 .col-3 {

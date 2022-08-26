@@ -1,9 +1,21 @@
 import ancients from '../assets/Ancients/ancients.js';
 import mythDeck from './mythDeck.js';
 
-import greenCardsData from './greenCard.js';
-import brownCardsData from './brownCard.js';
-import blueCardsData from './blueCard.js';
+import greenCardsDataArr from './greenCard.js';
+import brownCardsDataArr from './brownCard.js';
+import blueCardsDataArr from './blueCard.js';
+
+let greenCardsData,
+    brownCardsData,
+    blueCardsData;
+
+function importDataCard() {
+    greenCardsData = JSON.parse(JSON.stringify(greenCardsDataArr));
+    brownCardsData = JSON.parse(JSON.stringify(brownCardsDataArr));
+    blueCardsData = JSON.parse(JSON.stringify(blueCardsDataArr));
+    console.log('Данные обновлены!');
+    console.log('--------------------------------/');
+}
 
 let ancientsClass = document.querySelector('.ancients');
 let complexityClass = document.querySelector('.complexity');
@@ -30,8 +42,11 @@ let azathoth = document.querySelector('.azathoth');
 const nameCardList = ['cthulthu', 'shubNiggurath', 'iogSothoth', 'azathoth'];
 const propCardList = [cthulthu, shubNiggurath, logSothoth, azathoth];
 
+
 let selectCardValue = '';
+
 function classToggle(selectCard) {
+    importDataCard(); // Обновляем значения данных карт после выбора новой карты
     nameCardList.forEach((el, index) => {
         if (el == selectCard) {
             let mixResultClass = document.querySelector('.mix-result');
@@ -43,13 +58,14 @@ function classToggle(selectCard) {
                 mixUpButton.remove();
             }
             propCardList[index].firstChild.classList.add('active-card');
-            selectCardValue = el;
-            addRadioButton();
+            selectCardValue = el; // Сохраняем выбранную карту
         } else {
             propCardList[index].firstChild.classList.remove('active-card');
         }
     });
+    addRadioButton(); // Добавляем выбор сложности после выбора карты древнего
 }
+
 
 let container = document.querySelector('.ancients');
 container.addEventListener('click', (event) => {
@@ -79,7 +95,10 @@ function addRadioButton() {
 <div class="col-4"><input id="hard" class="hard" name="complexity" type="radio" value="hard"><label for="hard" class="radio-style"> Тяжелая</label></div>`;
 }
 
+
+// Выбираем сложность и добавляем кнопку замешивания колоды
 let complexity = '';
+
 complexityClass.addEventListener('click', (event) => {
     complexity = event.target.value;
     if (selectCardValue != '' && complexity != undefined) {
@@ -89,52 +108,7 @@ complexityClass.addEventListener('click', (event) => {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function getMythDeck(cardsArrayStage) {
-    let mythDeckClass = document.querySelector('.myth-deck');
-
-    cardsArrayStage.forEach((el, index) => {
-        console.log('--------------------------------/');
-        console.log(el.green);
-        console.log(el.brown);
-        console.log(el.blue);
-        console.log('--------------------------------/');
-        let stageContainer = document.createElement('div');
-        stageContainer.classList.add('stage-container');
-
-        let stageText = document.createElement('span');
-        stageText.classList.add('stage-text');
-
-        let dotsContainer = document.createElement('div');
-        dotsContainer.classList.add('dots-container');
-
-        let green = document.createElement('div');
-        green.classList.add('dot', 'green');
-
-        let brown = document.createElement('div');
-        brown.classList.add('dot', 'brown');
-
-        let blue = document.createElement('div');
-        blue.classList.add('dot', 'blue');
-
-        mythDeckClass.appendChild(stageContainer);
-        stageContainer.appendChild(stageText);
-        stageText.textContent = `${index + 1} стадия`;
-        stageContainer.appendChild(dotsContainer);
-
-        green.textContent = el.green.length;
-        dotsContainer.appendChild(green);
-
-        brown.textContent = el.brown.length;
-        dotsContainer.appendChild(brown);
-
-        blue.textContent = el.blue.length;
-        dotsContainer.appendChild(blue);
-
-    });
-}
-
-
-function updateDataStage(cardsArrayStage) {
+function updateCountCard(cardsArrayStage) {
     let mythDeckClass = document.querySelector('.myth-deck');
 
     while (mythDeckClass.firstChild) {
@@ -142,6 +116,13 @@ function updateDataStage(cardsArrayStage) {
     }
 
     cardsArrayStage.forEach((el, index) => {
+        /*
+          console.log('--------------------------------/');
+          console.log(el.green);
+          console.log(el.brown);
+          console.log(el.blue);
+          console.log('--------------------------------/');
+        */
         let stageContainer = document.createElement('div');
         stageContainer.classList.add('stage-container');
 
@@ -193,9 +174,11 @@ function deletedAddCard(subarray, idCard) {
     }
 }
 
+
 function deletedCard(subarray) {
     subarray.splice(0, 1);
 }
+
 
 // Генерируем коллецию карт для игры (трех этапов)
 function collectArrayCards(el) {
@@ -254,9 +237,11 @@ function collectArrayCards(el) {
     return stageArray;
 }
 
+
 let cardsArrayStage = [];
 
 function getCardAlgoritm() {
+    cardsArrayStage = [];
 
     console.log('Вы выбрали: ' + selectCardValue);
     console.log('Сложность: ' + complexity);
@@ -270,12 +255,9 @@ function getCardAlgoritm() {
         });
     }
 
-    getMythDeck(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
-
-    console.log('--------------------------------------');
-    console.log('Коллекция карт');
     console.log(cardsArrayStage);
-    console.log('--------------------------------------');
+
+    updateCountCard(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 }
 
 
@@ -314,10 +296,43 @@ mixUp.addEventListener('click', (event) => {
     }
 });
 
+let itter1,
+    itter2,
+    itter3;
 
 function showAndRemoveCard() {
-    deletedCard(cardsArrayStage[0].blue); ///////////////// !!! Исправить удаление элементов!!!
-    updateDataStage(cardsArrayStage);
+    console.log('----------------------------///');
+    console.log(cardsArrayStage[0]);
+    console.log('----------------------------///');
+
+    console.log('----------------------------***');
+    console.log(cardsArrayStage[0][Object.keys(cardsArrayStage[0])[Math.floor(Math.random() * Object.keys(cardsArrayStage[0]).length)]]);
+    console.log('----------------------------***');
+
+
+    deletedCard(cardsArrayStage[0].key[2]); ///////////////// !!! Исправить удаление элементов!!
+
+    updateCountCard(cardsArrayStage);
+
+    cardsArrayStage.forEach((el, index) => {
+        switch (index) {
+            case 0:
+                itter1 = el.green.length + el.brown.length + el.blue.length;
+                break;
+            case 1:
+                itter2 = el.green.length + el.brown.length + el.blue.length;
+                break;
+            case 2:
+                itter3 = el.green.length + el.brown.length + el.blue.length;
+                break;
+        }
+    });
+
+    console.log('----------------------------///');
+    console.log(itter1);
+    console.log(itter2);
+    console.log(itter3);
+    console.log('----------------------------///');
 }
 
 
