@@ -181,7 +181,7 @@ function deletedCard(randomArrCard, folderCard) {
 
 
 // Генерируем коллецию карт для игры (трех этапов)
-function collectArrayCardsEasy(el) {
+function collectArrayCardsEasyHard(el) {
 
     let stageArray = {
         green: [],
@@ -332,10 +332,10 @@ function getCardAlgoritm() {
 
     switch (complexity) {
         case 'easy':
-            console.log('----------------Выбран легкий уровень----------');
+            console.log('----------------Выбран очень легкий уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
-                    stageArray = collectArrayCardsEasy(el);
+                    stageArray = collectArrayCardsEasyHard(el);
                     cardsArrayStage.push(stageArray);
                 }
             });
@@ -346,6 +346,16 @@ function getCardAlgoritm() {
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsNormal(el);
+                    cardsArrayStage.push(stageArray);
+                }
+            });
+            break;
+
+        case 'hard':
+            console.log('----------------Выбран очень высокий уровень----------');
+            mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
+                if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
+                    stageArray = collectArrayCardsEasyHard(el);
                     cardsArrayStage.push(stageArray);
                 }
             });
