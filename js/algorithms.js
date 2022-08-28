@@ -91,9 +91,11 @@ container.addEventListener('click', (event) => {
 
 function addRadioButton() {
     complexityClass.innerHTML = `
-<div class="col-4"><input id="easy" class="easy" name="complexity" type="radio" value="easy"><label for="easy" class="radio-style"> Легкая</label></div>
-<div class="col-4"><input id="normal" class="normal" name="complexity" type="radio" value="normal"><label for="normal" class="radio-style"> Среднаяя</label></div>
-<div class="col-4"><input id="hard" class="hard" name="complexity" type="radio" value="hard"><label for="hard" class="radio-style"> Тяжелая</label></div>`;
+<div class="col-2"><input id="easy" class="easy" name="complexity" type="radio" value="easy"><label for="easy" class="radio-style"> Очень легкий</label></div>
+<div class="col-2"><input id="easy-plus" class="easy-plus" name="complexity" type="radio" value="easy-plus"><label for="easy-plus" class="radio-style"> Легкий</label></div>
+<div class="col-2"><input id="normal" class="normal" name="complexity" type="radio" value="normal"><label for="normal" class="radio-style"> Средний</label></div>
+<div class="col-2"><input id="hard-min" class="hard-min" name="complexity" type="radio" value="hard-min"><label for="hard-min" class="radio-style"> Тяжелый</label></div>
+<div class="col-2"><input id="hard" class="hard" name="complexity" type="radio" value="hard"><label for="hard" class="radio-style">Очень тяжелый</label></div>`;
 }
 
 
