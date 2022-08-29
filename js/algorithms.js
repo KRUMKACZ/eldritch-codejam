@@ -415,7 +415,6 @@ function getCardAlgoritm() {
 
     switch (complexity) {
         case 'easy':
-            console.log('----------------Выбран очень легкий уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsEasyHard(el);
@@ -425,7 +424,6 @@ function getCardAlgoritm() {
             break;
 
         case 'easy-plus':
-            console.log('----------------Выбран легкий уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsPlusMin(el);
@@ -435,7 +433,6 @@ function getCardAlgoritm() {
             break;
 
         case 'normal':
-            console.log('----------------Выбран нормальный уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsNormal(el);
@@ -445,7 +442,6 @@ function getCardAlgoritm() {
             break;
 
         case 'hard-min':
-            console.log('----------------Выбран высокий уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsPlusMin(el);
@@ -455,7 +451,6 @@ function getCardAlgoritm() {
             break;
 
         case 'hard':
-            console.log('----------------Выбран очень высокий уровень----------');
             mythDeck[selectCardValue].forEach((el) => { // Получаем подмассив колоды мифов выбранного древнего
                 if (Array.isArray(el)) { // Перебираем подмассив формируя коллецию карт
                     stageArray = collectArrayCardsEasyHard(el);
@@ -465,9 +460,11 @@ function getCardAlgoritm() {
             break;
     }
 
-    console.log('------------Коллекция карт--------------');
-    console.log(cardsArrayStage);
-    console.log('-------------------------------------');
+    /*
+        console.log('------------Коллекция карт--------------');
+        console.log(cardsArrayStage);
+        console.log('-------------------------------------');
+    */
 
     updateCountCard(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 }
@@ -551,12 +548,12 @@ function showAndRemoveCard() {
     }
 
     updateItter();
-
-    console.log("Стадия " + indexStage);
-    console.log('----------------------------*---*');
-    console.log(cardsArrayStage[indexStage]);
-    console.log('----------------------------///');
-
+    /*
+        console.log("Стадия " + indexStage);
+        console.log('----------------------------*---*');
+        console.log(cardsArrayStage[indexStage]);
+        console.log('----------------------------///');
+    */
     updateCountCard(cardsArrayStage); // Обновляем состояние кол-ва карт
 
 }
