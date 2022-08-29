@@ -23,6 +23,7 @@ let complexityClass = document.querySelector('.complexity');
 let mixUp = document.querySelector('.mix-up');
 
 ancients.forEach((element) => {
+    element = element[0].toUpperCase() + element.slice(1);
     let ancientImg = `<img src="assets/Ancients/${element}.png" width="85%" alt="${element}">`;
     let ancientCol = document.createElement('div');
     ancientCol.classList.add('col-3', 'card');
