@@ -46,7 +46,6 @@ const propCardList = [cthulthu, shubNiggurath, logSothoth, azathoth];
 
 
 let selectCardValue = '';
-
 function classToggle(selectCard) {
     importDataCard(); // Обновляем значения данных карт после выбора новой карты
     nameCardList.forEach((el, index) => {
@@ -184,7 +183,6 @@ function deletedCard(randomArrCard, folderCard) {
 function randomKeysDifficulty() {
     let positionKeys = Math.floor(Math.random() * keysDifficultyData.length);
     complexity = keysDifficultyData[positionKeys]; // Рандомный уровень сложности карт  
-
     return complexity;
 }
 
@@ -200,7 +198,6 @@ function randomKeysDifficultyEasyPlusHard() {
             break;
     }
     tempComplexity = keysDifficultyData[positionKeys]; // Рандомный уровень сложности карт  
-
     return tempComplexity;
 }
 
@@ -409,8 +406,6 @@ let cardsArrayStage = []; // Создаем пустой массив для к�
 let stageArray;
 function getCardAlgoritm() {
 
-
-
     cardsArrayStage = []; // Пересоздаем пустой массив, в случае выбора новой карты
 
     switch (complexity) {
@@ -459,9 +454,6 @@ function getCardAlgoritm() {
             });
             break;
     }
-
-
-
     updateCountCard(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 }
 
@@ -524,8 +516,6 @@ function showAndRemoveCard() {
     let randomArrCard = cardsArrayStage[indexStage][keys[positionKeys]];
     let folderCard = keys[positionKeys];
 
-
-
     if (itter > 1) {
         if (randomArrCard.length != 0) {
             deletedCard(randomArrCard, folderCard);
@@ -537,16 +527,14 @@ function showAndRemoveCard() {
             deletedCard(randomArrCard, folderCard);
             indexStage++;
         } else {
-            showAndRemoveCard();
+            // showAndRemoveCard();
+            console.log("Колода закончилась! Обновисте страницу...");
         }
     }
 
     updateItter();
-
     updateCountCard(cardsArrayStage); // Обновляем состояние кол-ва карт
-
 }
-
 
 window.addEventListener('click', (event) => {
     if (event.target.alt == 'click-card') {
