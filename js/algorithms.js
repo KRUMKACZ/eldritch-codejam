@@ -4,6 +4,7 @@ import mythDeck from './mythDeck.js';
 import greenCardsDataArr from './greenCard.js';
 import brownCardsDataArr from './brownCard.js';
 import blueCardsDataArr from './blueCard.js';
+import keysDifficultyData from './difficulty.js';
 
 let greenCardsData,
     brownCardsData,
@@ -14,8 +15,7 @@ function importDataCard() {
     greenCardsData = JSON.parse(JSON.stringify(greenCardsDataArr));
     brownCardsData = JSON.parse(JSON.stringify(brownCardsDataArr));
     blueCardsData = JSON.parse(JSON.stringify(blueCardsDataArr));
-    console.log('Данные обновлены!');
-    console.log('--------------------------------/');
+
 }
 
 let ancientsClass = document.querySelector('.ancients');
@@ -23,8 +23,8 @@ let complexityClass = document.querySelector('.complexity');
 let mixUp = document.querySelector('.mix-up');
 
 ancients.forEach((element) => {
-    element = element[0].toUpperCase() + element.slice(1);
-    let ancientImg = `<img src="assets/Ancients/${element}.png" width="85%" alt="${element}">`;
+    let elementName = element[0].toUpperCase() + element.slice(1);
+    let ancientImg = `<img src="assets/Ancients/${elementName}.png" width="85%" alt="${element}">`;
     let ancientCol = document.createElement('div');
     ancientCol.classList.add('col-3', 'card');
     ancientsClass.appendChild(ancientCol);
@@ -110,6 +110,7 @@ complexityClass.addEventListener('click', (event) => {
     }
 });
 
+let tempComplexity = complexity;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function updateCountCard(cardsArrayStage) {
@@ -174,12 +175,33 @@ function deletedAddCard(subarray, idCard) {
 function deletedCard(randomArrCard, folderCard) {
     let positionCard = Math.floor(Math.random() * randomArrCard.length);
     showRandomCard = randomArrCard[positionCard];
-    console.log('Рандомная карта: ' + showRandomCard);
-    console.log('///////////////////////////////////////////////////////');
     let showRandomCardContainer = document.querySelector('.get-card');
 
     showRandomCardContainer.innerHTML = `<img src='./assets/MythicCards/${folderCard}/${showRandomCard}.png' width='50%' alt='select-card'>`;
     randomArrCard.splice(positionCard, 1);
+}
+
+function randomKeysDifficulty() {
+    let positionKeys = Math.floor(Math.random() * keysDifficultyData.length);
+    complexity = keysDifficultyData[positionKeys]; // Рандомный уровень сложности карт  
+
+    return complexity;
+}
+
+
+function randomKeysDifficultyEasyPlusHard() {
+    let positionKeys
+    switch (complexity) {
+        case 'easy-plus':
+            positionKeys = Math.floor(Math.random() * 2);
+            break;
+        case 'hard-min':
+            positionKeys = Math.floor(Math.random() * 2) + 1;
+            break;
+    }
+    tempComplexity = keysDifficultyData[positionKeys]; // Рандомный уровень сложности карт  
+
+    return tempComplexity;
 }
 
 
@@ -249,14 +271,6 @@ function collectArrayCardsNormal(el) {
         blue: []
     };
 
-    function randomKeysDifficulty() {
-        let keysDifficulty = Object.keys(greenCardsData);
-        let positionKeys = Math.floor(Math.random() * Object.keys(greenCardsData).length);
-        complexity = keysDifficulty[positionKeys]; // Рандомный уровень сложности карт  
-        return complexity;
-    }
-
-
     el.forEach((el, index) => { // Получаем элементы подмассива 
         // Формируем кол-во иттераций для выборки карт [green, brown, blue]
         let subarray,
@@ -322,21 +336,11 @@ function collectArrayCardsNormal(el) {
 }
 
 function collectArrayCardsPlusMin(el) {
-
     let stageArray = {
         green: [],
         brown: [],
         blue: []
     };
-
-    // Учитывая одноименные уровни сложности карт, выборка производится из greenCardsData
-    function randomKeysDifficulty() {
-        let keysDifficulty = Object.keys(greenCardsData);
-        let positionKeys = Math.floor(Math.random() * Object.keys(greenCardsData).length);
-        complexity = keysDifficulty[positionKeys]; // Рандомный уровень сложности карт  
-        return complexity;
-    }
-
 
     el.forEach((el, index) => { // Получаем элементы подмассива 
         // Формируем кол-во иттераций для выборки карт [green, brown, blue]
@@ -346,19 +350,16 @@ function collectArrayCardsPlusMin(el) {
         // Собираем первую колоду карт
         if (index == 0) { // Первая иттерация подмассива [0]
             for (let i = 0; i < el; i++) {
-                randomKeysDifficulty();
 
-                console.log('---Рандомный уровень сложности зеленых карт----');
-                console.log(complexity);
-                console.log('-------------------------------------');
+                randomKeysDifficultyEasyPlusHard();
 
-                if (greenCardsData[complexity] == 0) { // Добираем обычные карты
-                    complexity = randomKeysDifficulty();
+                if (greenCardsData[tempComplexity] == 0) { // Добираем обычные карты
+                    tempComplexity = randomKeysDifficultyEasyPlusHard();
                 }
 
-                let randomNum = getRandomIntInclusive(0, greenCardsData[complexity].length);
-                subarray = greenCardsData[complexity];
-                idCard = greenCardsData[complexity][randomNum];
+                let randomNum = getRandomIntInclusive(0, greenCardsData[tempComplexity].length);
+                subarray = greenCardsData[tempComplexity];
+                idCard = greenCardsData[tempComplexity][randomNum];
                 stageArray['green'].push(idCard);
 
                 deletedAddCard(subarray, idCard);
@@ -367,15 +368,15 @@ function collectArrayCardsPlusMin(el) {
         // Собираем вторую колоду карт
         if (index == 1) { // Вторая иттерация подмассива [1]
             for (let i = 0; i < el; i++) {
-                randomKeysDifficulty();
+                randomKeysDifficultyEasyPlusHard();
 
-                if (brownCardsData[complexity] == 0) { // Добираем обычные карты
-                    complexity = randomKeysDifficulty();
+                if (brownCardsData[tempComplexity] == 0) { // Добираем обычные карты
+                    tempComplexity = randomKeysDifficultyEasyPlusHard();
                 }
 
-                let randomNum = getRandomIntInclusive(0, brownCardsData[complexity].length);
-                subarray = brownCardsData[complexity];
-                idCard = brownCardsData[complexity][randomNum];
+                let randomNum = getRandomIntInclusive(0, brownCardsData[tempComplexity].length);
+                subarray = brownCardsData[tempComplexity];
+                idCard = brownCardsData[tempComplexity][randomNum];
                 stageArray['brown'].push(idCard);
 
                 deletedAddCard(subarray, idCard);
@@ -384,15 +385,15 @@ function collectArrayCardsPlusMin(el) {
         // Собираем третью колоду карт
         if (index == 2) { // Третья иттерация подмассива [2]
             for (let i = 0; i < el; i++) {
-                randomKeysDifficulty();
+                randomKeysDifficultyEasyPlusHard();
 
-                if (blueCardsData[complexity] == 0) { // Добираем обычные карты
-                    complexity = randomKeysDifficulty();
+                if (blueCardsData[tempComplexity] == 0) { // Добираем обычные карты
+                    tempComplexity = randomKeysDifficultyEasyPlusHard();
                 }
 
-                let randomNum = getRandomIntInclusive(0, blueCardsData[complexity].length);
-                subarray = blueCardsData[complexity];
-                idCard = blueCardsData[complexity][randomNum];
+                let randomNum = getRandomIntInclusive(0, blueCardsData[tempComplexity].length);
+                subarray = blueCardsData[tempComplexity];
+                idCard = blueCardsData[tempComplexity][randomNum];
                 stageArray['blue'].push(idCard);
 
                 deletedAddCard(subarray, idCard);
@@ -408,9 +409,7 @@ let cardsArrayStage = []; // Создаем пустой массив для к�
 let stageArray;
 function getCardAlgoritm() {
 
-    console.log('Вы выбрали: ' + selectCardValue);
-    console.log('Сложность: ' + complexity);
-    console.log('-------------------------------------');
+
 
     cardsArrayStage = []; // Пересоздаем пустой массив, в случае выбора новой карты
 
@@ -461,11 +460,7 @@ function getCardAlgoritm() {
             break;
     }
 
-    /*
-        console.log('------------Коллекция карт--------------');
-        console.log(cardsArrayStage);
-        console.log('-------------------------------------');
-    */
+
 
     updateCountCard(cardsArrayStage); // Вызываем функцию перебора массива и отображения данных по стадиям игры
 }
@@ -529,9 +524,7 @@ function showAndRemoveCard() {
     let randomArrCard = cardsArrayStage[indexStage][keys[positionKeys]];
     let folderCard = keys[positionKeys];
 
-    console.log('-Ключ-----------------*---*');
-    console.log('Ключ: ' + keys[positionKeys]);
-    console.log('----------------------------///');
+
 
     if (itter > 1) {
         if (randomArrCard.length != 0) {
@@ -549,12 +542,7 @@ function showAndRemoveCard() {
     }
 
     updateItter();
-    /*
-        console.log("Стадия " + indexStage);
-        console.log('----------------------------*---*');
-        console.log(cardsArrayStage[indexStage]);
-        console.log('----------------------------///');
-    */
+
     updateCountCard(cardsArrayStage); // Обновляем состояние кол-ва карт
 
 }
